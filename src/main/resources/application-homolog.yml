@@ -1,0 +1,59 @@
+
+## CONFIGURAÇÕES TESTES/DESENVOLVIMENTO
+
+message: Configurações ativas para TESTES/DESENVOLVIMENTO
+
+server:
+  port: 8181
+  servlet:
+    context-path: /
+  undertow:
+   accesslog:
+     prefix: "[PGO-WS]"
+spring:
+  application:
+    name: 'projeta-ws'
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties: 
+      hibernate:
+        ddl-auto: update
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        temp:
+          use_jdbc_metadata_defaults: false
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+  jmx:
+    enabled: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pontocob
+    username: postgres
+    password: pontocob
+    initialization-mode: never
+
+#ACTUATOR
+management:
+ endpoint:
+   health:
+     show-details: always
+ endpoints:
+   web:
+     exposure:
+       include: "*"
+info:
+ app:
+   name: '@project.name@'
+   description: '@project.description@'
+   version: '@project.version@'
+   encoding: '@project.build.sourceEncoding@'
+   java:
+     version: '@java.version@'
+jwt:
+ secret: 'pontocob-2020-app'
+ enable: true
