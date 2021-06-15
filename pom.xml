@@ -10,10 +10,10 @@ http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
         <version>2.3.1.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>br.com.pontocob</groupId>
-    <artifactId>pontocob</artifactId>
+    <groupId>br.com.cineclube</groupId>
+    <artifactId>cineclube</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>pontocob</name>
+    <name>cineclube_app</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
