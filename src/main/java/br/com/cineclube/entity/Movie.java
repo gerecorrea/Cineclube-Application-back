@@ -1,10 +1,6 @@
 package br.com.cineclube.entity;
 
-import br.com.cineclube.enums.GenreTypes;
-import br.com.cineclube.enums.MovieType;
-import br.com.cineclube.enums.StreamingType;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -35,17 +31,20 @@ public class Movie {
 
 	private Integer year;
 
+	private Timestamp dateReleased;
+
 	@Column(columnDefinition = "boolean default false")
 	private Boolean isReleased;
 
 	@Column(name = "synopsis", length = 1000)
 	private String synopsis;
 
-	@ElementCollection
-	private List<String> genres  = new ArrayList<>();
+	//@ElementCollection
+	//private List<String> genres  = new ArrayList<>();
 
-	//Formato dos gêneros por string com separação por comma virando vetor
-	private String genresByComma;
+	//Formato dos gêneros por string com separação por comma virando vetor, salvando string por escrita mesmo.
+	//Valores possíveis em GenreTypes, naquela formato
+	private String genres;
 
 	private Integer runtime;
 
@@ -53,28 +52,35 @@ public class Movie {
 
 	private String country;
 
-	private MovieType type;
+	private String movieType;
 
 	// Tentativa com uma tabela intermediária de conexão - maneira boa para relacionar os filmes de cada pessoa, watchlist, etc?
-//	@ManyToMany(mappedBy = "Movie")
-//	private List<Person> persons = new ArrayList<>();
+	//	@ManyToMany(mappedBy = "Movie")
+	//	private List<Person> persons = new ArrayList<>();
 
-	@ElementCollection
-	private List<Person> personsList = new ArrayList<>();
+	// Lista de pessoas ligadas ao filme. Acredito que não precise mais, dado o formato acima usado.
+	//@ElementCollection
+	//private List<Person> personsList = new ArrayList<>();
 
-	// Lista de Person de uuid por comma para directors, actors, writers e producers;
+	// Lists of person identified by comma to directors, actors writes and producers
+	// LATER do a third entity linking person to movies, like I did in userMovieRelation, then can have a enum type of relation (director, etc)
 	private String directors;
+	private String directorsNames;
 
 	@Column(length = 2048)
 	private String actors;
+	@Column(length = 1024)
+	private String actorsNames;
 
 	private String writers;
+	private String writersNames;
 
 	private String producers;
+	private String producersNames;
 
-//	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = true)
-//	@JoinTable(name = "movie_directors", joinColumns = { @JoinColumn(name = "movie_uuid") }, inverseJoinColumns = { @JoinColumn(name = "person_uuid") })
-//	private List<Person> directors;
+	//	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = true)
+	//	@JoinTable(name = "movie_directors", joinColumns = { @JoinColumn(name = "movie_uuid") }, inverseJoinColumns = { @JoinColumn(name = "person_uuid") })
+	//	private List<Person> directors;
 
 	@Column(nullable = false)
 	private BigDecimal avgRating;
@@ -82,7 +88,7 @@ public class Movie {
 	@Column(columnDefinition = "numeric default 0")
 	private int numVotes;
 
-	//Deve virar uma entidade própria dps, com uuid, nome, link para clique, etc. Aí aqui uma lista disso.
+	// Would turn a entity later, with uuid, name, link to click, etc. And probabily a entity intermediating these two.
 	//private List<StreamingType> streamingChannels;
 
 	@CreationTimestamp

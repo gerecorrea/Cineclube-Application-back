@@ -30,8 +30,6 @@ public class Person {
 
 	private Integer birthYear;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-	@Column(name = "birth")
 	private Timestamp birth;
 
 //	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = true)
@@ -50,8 +48,7 @@ public class Person {
 
 	// Tentativa dos filmes de cada actor/etc com uuid por comma virando vetor:
 	@Column(length = 2048)
-	private String moviesString;
-
+	private String personMovies;
 
 	@CreationTimestamp
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = "America/Sao_Paulo")

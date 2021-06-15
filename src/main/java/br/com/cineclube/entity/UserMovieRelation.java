@@ -6,11 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -18,35 +14,27 @@ import java.util.UUID;
 @EqualsAndHashCode
 @Entity
 @Builder
-@Table(name = "user_cineclube", uniqueConstraints = { @UniqueConstraint(columnNames = { "uuid" }) })
+@Table(name = "user_movie_relation", uniqueConstraints = { @UniqueConstraint(columnNames = { "uuid" }) })
 @AllArgsConstructor
 @NoArgsConstructor
-
-public class User {
+public class UserMovieRelation {
 
 	@Id
 	@GeneratedValue(generator = "system-uuid", strategy = GenerationType.AUTO)
 	@Column(columnDefinition = "uuid", nullable = false)
 	private UUID uuid;
 
-	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
-	@JoinColumn(name = "login_uuid", referencedColumnName = "uuid", nullable = false)
-	private Login login;
+	private UUID movie_uuid;
+	private UUID user_uuid;
 
-	@Column(name = "name", length = 100, nullable = false)
-	private String name;
+	@Column(columnDefinition = "default false")
+	private boolean isRated;
 
-	@Email
-	@Column(name = "email", length = 120)
-	private String email;
+	@Column(columnDefinition = "default false")
+	private boolean favorite;
 
-	@Column(length = 2048)
-	private String actors;
-	@Column(length = 1024)
-	private String actorsNames;
-
-	// String by comma to separated integers quantities
-	private String ratingDistribution;
+	@Column(columnDefinition = "default false")
+	private boolean watchlist;
 
 	@CreationTimestamp
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
