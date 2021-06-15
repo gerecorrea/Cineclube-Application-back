@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,4 +20,6 @@ public class UserService {
 	public Optional<User> findUserByLoginUuid(UUID uuid) {
 		return userRepository.findUserByLoginUuid(uuid);
 	}
+
+	public List<User> findAll(){ return userRepository.findAll();}
 }
