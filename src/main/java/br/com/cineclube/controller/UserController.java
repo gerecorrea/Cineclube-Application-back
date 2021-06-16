@@ -2,6 +2,7 @@ package br.com.cineclube.controller;
 
 import br.com.cineclube.entity.User;
 import br.com.cineclube.service.UserService;
+import br.com.cineclube.util.LoggerUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +23,44 @@ public class UserController extends LoggedInController {
 	@Autowired
 	UserService userService;
 
+	@PostMapping
+	public User create(@RequestBody User user){
+		return userService.create(user);
+	}
+
+	@PostMapping("/register")
+	public User createUnauthenticated(@RequestBody User user){
+		return userService.create(user);
+	}
+
+	@PutMapping("/{uuid}")
+	public User update(final @PathVariable("uuid") UUID uuid, @RequestBody User user) {
+		return  userService.update(uuid, user);
+	}
+
+	@DeleteMapping("/{uuid}")
+	public void remove(final @PathVariable("uuid") UUID uuid) {
+		userService.remove(uuid);
+	}
+
+	@PutMapping("/activateInactivate/{uuid}")
+	public void activateUser(final @PathVariable("uuid") UUID uuid) {
+		userService.activateInactivateUser(uuid);
+	}
+
+	@PutMapping("/admin/{uuid}")
+	public void changeAdmin(final @PathVariable("uuid") UUID uuid) {
+			userService.changeAdmin(uuid);
+	}
+
 	@GetMapping("/{uuid}")
 	public Optional<User> findUserByLoginUuid(final @PathVariable("uuid") UUID uuid){
-		return userService.findUserByLoginUuid(uuid);
+			return userService.findUserByLoginUuid(uuid);
 	}
 
 	@GetMapping("/findAll")
 	public List<User> findAll(){
-		return userService.findAll();
+			return userService.findAll();
 	}
 
 }
