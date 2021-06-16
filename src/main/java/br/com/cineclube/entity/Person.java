@@ -30,7 +30,9 @@ public class Person {
 
 	private Integer birthYear;
 
-	private Timestamp birth;
+	private String birthDate;
+
+	private String country;
 
 //	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = true)
 //	@JoinTable(name = "person_movies", joinColumns = { @JoinColumn(name = "person_uuid") }, inverseJoinColumns = { @JoinColumn(name = "movie_uuid") })
@@ -49,6 +51,8 @@ public class Person {
 	// Tentativa dos filmes de cada actor/etc com uuid por comma virando vetor:
 	@Column(length = 2048)
 	private String personMovies;
+
+	private String jobRoles;
 
 	@CreationTimestamp
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
