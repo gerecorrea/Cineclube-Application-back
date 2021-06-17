@@ -53,9 +53,14 @@ public class UserController extends LoggedInController {
 			userService.changeAdmin(uuid);
 	}
 
-	@GetMapping("/{uuid}")
+	@GetMapping("/login/{uuid}")
 	public Optional<User> findUserByLoginUuid(final @PathVariable("uuid") UUID uuid){
 			return userService.findUserByLoginUuid(uuid);
+	}
+
+	@GetMapping("/findByUuid/{uuid}")
+	public Optional<User> findByUuid(final @PathVariable("uuid") UUID uuid){
+		return userService.findById(uuid);
 	}
 
 	@GetMapping("/findAll")
