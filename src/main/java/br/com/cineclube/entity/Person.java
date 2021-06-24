@@ -34,6 +34,9 @@ public class Person {
 
 	private String country;
 
+	@Column(length = 1024)
+	private String imageLink;
+
 //	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = true)
 //	@JoinTable(name = "person_movies", joinColumns = { @JoinColumn(name = "person_uuid") }, inverseJoinColumns = { @JoinColumn(name = "movie_uuid") })
 //	private List<Movie> movies;
