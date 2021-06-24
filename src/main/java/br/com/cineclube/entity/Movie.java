@@ -46,6 +46,8 @@ public class Movie {
 	//Valores possíveis em GenreTypes, naquela formato
 	private String genres;
 
+	private ArrayList<String> genresArray = new ArrayList<>();
+
 	private Integer runtime;
 
 	private String language;
@@ -53,6 +55,9 @@ public class Movie {
 	private String country;
 
 	private String movieType;
+
+	@Column(length = 1024)
+	private String imageLink;
 
 	// Tentativa com uma tabela intermediária de conexão - maneira boa para relacionar os filmes de cada pessoa, watchlist, etc?
 	//	@ManyToMany(mappedBy = "Movie")

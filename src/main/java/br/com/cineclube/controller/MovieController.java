@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/movie")
@@ -23,6 +24,21 @@ public class MovieController {
 
 	@Autowired
 	MovieService movieService;
+
+	@PostMapping
+	public Movie create(@RequestBody Movie movie){
+		return movieService.create(movie);
+	}
+
+	@PutMapping("/{uuid}")
+	public Movie update(final @PathVariable("uuid") UUID uuid, @RequestBody Movie movie) {
+		return  movieService.update(uuid, movie);
+	}
+
+	@DeleteMapping("/{uuid}")
+	public void remove(final @PathVariable("uuid") UUID uuid) {
+		movieService.remove(uuid);
+	}
 
 	@GetMapping("/findAll")
 	public List<Movie> findAll(){
