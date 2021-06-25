@@ -35,4 +35,8 @@ public class MovieService {
 		return movieRepository.findAll();
 	}
 
+	public Optional<Movie> findByUuid(UUID uuid){
+		return movieRepository.findByUuid(uuid);
+	}
+
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -43,5 +44,10 @@ public class MovieController {
 	@GetMapping("/findAll")
 	public List<Movie> findAll(){
 		return movieService.findAll();
+	}
+
+	@GetMapping("/findByUuid/{uuid}")
+	public Optional<Movie> findByUuid(final @PathVariable("uuid") UUID uuid){
+		return movieService.findByUuid(uuid);
 	}
 }
