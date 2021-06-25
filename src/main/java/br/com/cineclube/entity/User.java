@@ -40,11 +40,6 @@ public class User {
 	@Column(name = "email", length = 120)
 	private String email;
 
-	@Column(length = 2048)
-	private String actors;
-	@Column(length = 1024)
-	private String actorsNames;
-
 	// String by comma to separated integers quantities
 	private String ratingDistribution;
 
