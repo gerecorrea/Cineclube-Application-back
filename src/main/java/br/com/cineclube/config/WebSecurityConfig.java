@@ -82,7 +82,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					"/swagger-ui.html",
 					"/webjars/**",
 					"/login",
-					"/*")
+					"/user/register")
 					.permitAll()
 					.antMatchers( HttpMethod.OPTIONS, "/**" )
 					.permitAll().
