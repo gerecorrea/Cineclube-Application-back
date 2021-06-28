@@ -32,14 +32,13 @@ public class Person {
 
 	private String birthDate;
 
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
+	private Timestamp birth;
+
 	private String country;
 
 	@Column(length = 1024)
 	private String imageLink;
-
-//	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = true)
-//	@JoinTable(name = "person_movies", joinColumns = { @JoinColumn(name = "person_uuid") }, inverseJoinColumns = { @JoinColumn(name = "movie_uuid") })
-//	private List<Movie> movies;
 
 	// Tabela intermediária de conexão entre filmes e pessoas - maneira boa para relacionar os filmes de cada pessoa, watchlist, etc?
 //	@ManyToMany
@@ -48,12 +47,7 @@ public class Person {
 //			inverseJoinColumns=@JoinColumn(name="movie_uuid"))
 //	private List<Movie> movies = new ArrayList<>();
 
-	@ElementCollection
-	private List<Movie> moviesList = new ArrayList<>();
-
-	// Tentativa dos filmes de cada actor/etc com uuid por comma virando vetor:
-	@Column(length = 2048)
-	private String personMovies;
+	private ArrayList<String> jobTypes = new ArrayList<>();
 
 	private String jobRoles;
 

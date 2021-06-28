@@ -1,11 +1,13 @@
 package br.com.cineclube.controller;
 
+import br.com.cineclube.entity.Movie;
 import br.com.cineclube.entity.Person;
 import br.com.cineclube.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -32,8 +34,12 @@ public class PersonController {
 
 	@GetMapping("/findAll")
 	public List<Person> findAll(){
-
 		return personService.findAll();
+	}
+
+	@GetMapping("/findByUuid/{uuid}")
+	public Optional<Person> findByUuid(final @PathVariable("uuid") UUID uuid){
+		return personService.findByUuid(uuid);
 	}
 
 }

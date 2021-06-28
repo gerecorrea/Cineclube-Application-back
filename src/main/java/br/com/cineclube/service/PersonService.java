@@ -34,4 +34,8 @@ public class PersonService {
 	public List<Person> findAll(){
 		return personRepository.findAll();
 	}
+
+	public Optional<Person> findByUuid(UUID uuid){
+		return PersonRepository.findByUuid(uuid);
+	}
 }
