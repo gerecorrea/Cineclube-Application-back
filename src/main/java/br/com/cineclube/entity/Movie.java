@@ -31,6 +31,7 @@ public class Movie {
 
 	private Integer year;
 
+	@JsonFormat(timezone = "America/Sao_Paulo")
 	private Timestamp dateReleased;
 
 	@Column(columnDefinition = "boolean default false")
