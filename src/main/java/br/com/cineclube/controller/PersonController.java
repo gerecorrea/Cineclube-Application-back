@@ -42,4 +42,9 @@ public class PersonController {
 		return personService.findByUuid(uuid);
 	}
 
+	@GetMapping("/findById/{uuid}")
+	public Optional<Person> findById(final @PathVariable("uuid") UUID uuid){
+		return personService.findById(uuid);
+	}
+
 }

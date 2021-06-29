@@ -30,9 +30,7 @@ public class Person {
 
 	private Integer birthYear;
 
-	private String birthDate;
-
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
+	@JsonFormat(timezone = "America/Sao_Paulo")
 	private Timestamp birth;
 
 	private String country;
