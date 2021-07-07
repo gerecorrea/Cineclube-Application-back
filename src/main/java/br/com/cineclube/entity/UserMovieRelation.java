@@ -24,11 +24,14 @@ public class UserMovieRelation {
 	@Column(columnDefinition = "uuid", nullable = false)
 	private UUID uuid;
 
-	private UUID movie_uuid;
-	private UUID user_uuid;
+	private UUID movieUuid;
+	private UUID userUuid;
 
 	@Column(columnDefinition = "default false")
 	private boolean isRated;
+
+	@Column(nullable = true)
+	private int rating;
 
 	@Column(columnDefinition = "default false")
 	private boolean favorite;
