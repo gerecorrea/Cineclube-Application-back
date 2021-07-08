@@ -12,7 +12,7 @@ public interface UserMovieRelationRepository  extends JpaRepository<UserMovieRel
 
 	List<UserMovieRelation> findAll();
 
-	Optional<UserMovieRelation> findByUuid(UUID uuid);
+	UserMovieRelation findByUuid(UUID uuid);
 
 	Optional<UserMovieRelation> findByUserUuidAndMovieUuid(UUID user, UUID movie);
 
