@@ -89,7 +89,7 @@ public class Movie {
 	//	private List<Person> directors;
 
 	@Column(nullable = false)
-	private BigDecimal avgRating;
+	private float avgRating;
 
 	@Column(columnDefinition = "numeric default 0")
 	private int numVotes;
