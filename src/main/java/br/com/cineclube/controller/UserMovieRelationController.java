@@ -23,6 +23,42 @@ public class UserMovieRelationController {
 		return userMovieRelationService.create(userMovieRelation);
 	}
 
+	@PutMapping("/changeFavorite/{uuid}/{rating}")
+	public ResponseEntity<Boolean> changeRating(final @PathVariable("uuid") UUID uuid, final @PathVariable("rating") int rating){
+		ResponseEntity<Boolean> response = ResponseEntity.notFound().build();
+
+		try {
+			response = ResponseEntity.ok(userMovieRelationService.changeRating(uuid, rating));
+		} catch (Exception e){
+			response = ResponseEntity.badRequest().build();
+		}
+		return response;
+	}
+
+	@PutMapping("/changeFavorite/{uuid}")
+	public ResponseEntity<Boolean> changeFavorite(final @PathVariable("uuid") UUID uuid){
+		ResponseEntity<Boolean> response = ResponseEntity.notFound().build();
+
+		try {
+			response = ResponseEntity.ok(userMovieRelationService.changeFavorite(uuid));
+		} catch (Exception e){
+			response = ResponseEntity.badRequest().build();
+		}
+		return response;
+	}
+
+	@PutMapping("/changeWatchlist/{uuid}")
+	public ResponseEntity<Boolean> changeWatchlist(final @PathVariable("uuid") UUID uuid){
+		ResponseEntity<Boolean> response = ResponseEntity.notFound().build();
+
+		try {
+			response = ResponseEntity.ok(userMovieRelationService.changeWatchlist(uuid));
+		} catch (Exception e){
+			response = ResponseEntity.badRequest().build();
+		}
+		return response;
+	}
+
 	@GetMapping("/findByUuid/{uuid}")
 	public Optional<UserMovieRelation> findByUuid(final @PathVariable("uuid") UUID uuid){
 		return userMovieRelationService.findByUuid(uuid);
