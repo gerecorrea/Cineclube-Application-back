@@ -64,7 +64,12 @@ public class UserMovieRelationService {
 
 	public boolean changeFavorite(UUID uuid){
 		UserMovieRelation userMovieRelation = userMovieRelationRepository.findByUuid(uuid);
+		Optional<Movie> movie = movieService.findByUuid(userMovieRelation.getMovieUuid());
 		userMovieRelation.setFavorite(!userMovieRelation.isFavorite());
+		if (movie.isPresent()) {
+			if (userMovieRelation.isFavorite()) movie.get().setNumFavorites(movie.get().getNumFavorites() + 1);
+			else movie.get().setNumFavorites(movie.get().getNumFavorites() - 1);
+		}
 		userMovieRelation = userMovieRelationRepository.save(userMovieRelation);
 		return userMovieRelation.getClass() != null;
 	}
