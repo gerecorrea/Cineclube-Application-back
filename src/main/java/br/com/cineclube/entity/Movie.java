@@ -60,6 +60,15 @@ public class Movie {
 	@Column(length = 1024)
 	private String imageLink;
 
+	@Column(nullable = false)
+	private float avgRating;
+
+	@Column(columnDefinition = "numeric default 0")
+	private int numVotes;
+
+	@Column(columnDefinition = "numeric default 0")
+	private Integer numFavorites;
+
 	// Tentativa com uma tabela intermediária de conexão - maneira boa para relacionar os filmes de cada pessoa, watchlist, etc?
 	//	@ManyToMany(mappedBy = "Movie")
 	//	private List<Person> persons = new ArrayList<>();
@@ -87,12 +96,6 @@ public class Movie {
 	//	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = true)
 	//	@JoinTable(name = "movie_directors", joinColumns = { @JoinColumn(name = "movie_uuid") }, inverseJoinColumns = { @JoinColumn(name = "person_uuid") })
 	//	private List<Person> directors;
-
-	@Column(nullable = false)
-	private float avgRating;
-
-	@Column(columnDefinition = "numeric default 0")
-	private int numVotes;
 
 	// Would turn a entity later, with uuid, name, link to click, etc. And probabily a entity intermediating these two.
 	//private List<StreamingType> streamingChannels;
