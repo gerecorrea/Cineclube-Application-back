@@ -1,5 +1,6 @@
 package br.com.cineclube.service;
 
+import br.com.cineclube.dto.UserMovieDto;
 import br.com.cineclube.entity.Movie;
 import br.com.cineclube.entity.User;
 import br.com.cineclube.entity.UserMovieRelation;
@@ -8,9 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -97,8 +96,17 @@ public class UserMovieRelationService {
 		return userMovieRelationRepository.findByMovieUuid(uuid);
 	}
 
-	public List<UserMovieRelation> findByUserUuidAndFavorite(UUID uuid, boolean favorite){
-		return userMovieRelationRepository.findByUserUuidAndFavorite(uuid, favorite);
+	public List<UserMovieDto> findByUserUuidAndFavorite(UUID uuid){
+		List<UserMovieDto> userMovieDtos = new ArrayList<>();
+		List<UserMovieRelation> userMovieRelationList = this.userMovieRelationRepository.findByUserUuidAndFavorite(uuid, true);
+		for (UserMovieRelation userMovieRelation : userMovieRelationList) {
+			Optional<Movie> movie = movieService.findByUuid(userMovieRelation.getMovieUuid());
+
+			if (movie.isPresent()){
+				userMovieDtos.add(UserMovieDto.convertToDto(userMovieRelation, movie));
+			}
+		}
+		return userMovieDtos;
 	}
 
 	public List<UserMovieRelation> findByUserUuidAndWatchlist(UUID uuid, boolean watchlist){

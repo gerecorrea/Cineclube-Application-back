@@ -1,11 +1,14 @@
 package br.com.cineclube.controller;
 
+import br.com.cineclube.dto.UserMovieDto;
 import br.com.cineclube.entity.UserMovieRelation;
 import br.com.cineclube.service.UserMovieRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -79,6 +82,23 @@ public class UserMovieRelationController {
 			optionalUserMovieRelation = userMovieRelationService.findByUuid(uuid);
 			if (optionalUserMovieRelation.isPresent()) {
 				response = ResponseEntity.ok(optionalUserMovieRelation.get());
+			}
+		} catch (Exception e){
+			response = ResponseEntity.badRequest().build();
+		}
+
+		return response;
+	}
+
+	@GetMapping("/findFavorites/{uuid}")
+	public ResponseEntity<List<UserMovieDto>> findFavorites(final @PathVariable("uuid") UUID uuid){
+		ResponseEntity<List<UserMovieDto>> response = ResponseEntity.notFound().build();
+		List<UserMovieDto> userMovieRelationList = null;
+
+		try {
+			userMovieRelationList = userMovieRelationService.findByUserUuidAndFavorite(uuid);
+			if (userMovieRelationList != null) {
+				response = ResponseEntity.ok(userMovieRelationList);
 			}
 		} catch (Exception e){
 			response = ResponseEntity.badRequest().build();
