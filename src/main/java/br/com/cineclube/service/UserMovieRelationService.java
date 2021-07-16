@@ -109,8 +109,17 @@ public class UserMovieRelationService {
 		return userMovieDtos;
 	}
 
-	public List<UserMovieRelation> findByUserUuidAndWatchlist(UUID uuid, boolean watchlist){
-		return userMovieRelationRepository.findByUserUuidAndWatchlist(uuid, watchlist);
+	public List<UserMovieDto> findByUserUuidAndWatchlist(UUID uuid){
+		List<UserMovieDto> userMovieDtos = new ArrayList<>();
+		List<UserMovieRelation> userMovieRelationList = this.userMovieRelationRepository.findByUserUuidAndWatchlist(uuid, true);
+		for (UserMovieRelation userMovieRelation : userMovieRelationList){
+			Optional<Movie> movie = movieService.findByUuid(userMovieRelation.getMovieUuid());
+
+			if (movie.isPresent()){
+				userMovieDtos.add(UserMovieDto.convertToDto(userMovieRelation, movie));
+			}
+		}
+		return userMovieDtos;
 	}
 
 	public List<UserMovieRelation> findByUserUuidAndRating(UUID uuid, int rating){

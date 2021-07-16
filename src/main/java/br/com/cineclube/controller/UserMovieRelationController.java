@@ -106,4 +106,21 @@ public class UserMovieRelationController {
 
 		return response;
 	}
+
+	@GetMapping("/findWatchlist/{uuid}")
+	public ResponseEntity<List<UserMovieDto>> findWatchlist(final @PathVariable("uuid") UUID uuid){
+		ResponseEntity<List<UserMovieDto>> response = ResponseEntity.notFound().build();
+		List<UserMovieDto> userMovieRelationList = null;
+
+		try {
+			userMovieRelationList = userMovieRelationService.findByUserUuidAndWatchlist(uuid);
+			if (userMovieRelationList != null) {
+				response = ResponseEntity.ok(userMovieRelationList);
+			}
+		} catch (Exception e){
+			response = ResponseEntity.badRequest().build();
+		}
+
+		return response;
+	}
 }
