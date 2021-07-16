@@ -22,6 +22,8 @@ public class UserMovieDto {
 
 	private boolean watchlist;
 
+	private boolean favorite;
+
 	public static UserMovieDto convertToDto(UserMovieRelation userMovieRelation, Optional<Movie> movie) {
 		UserMovieDto userMovieDto = new UserMovieDto();
 
@@ -38,6 +40,9 @@ public class UserMovieDto {
 
 		if (userMovieRelation.isWatchlist())
 			userMovieDto.setWatchlist(true);
+
+		if (userMovieRelation.isFavorite())
+			userMovieDto.setFavorite(true);
 
 		return userMovieDto;
 	}
