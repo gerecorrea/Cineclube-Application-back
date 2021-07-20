@@ -26,7 +26,7 @@ public class UserMovieRelationController {
 		return userMovieRelationService.create(userMovieRelation);
 	}
 
-	@PutMapping("/changeFavorite/{uuid}/{rating}")
+	@PutMapping("/changeRating/{uuid}/{rating}")
 	public ResponseEntity<Boolean> changeRating(final @PathVariable("uuid") UUID uuid, final @PathVariable("rating") int rating){
 		ResponseEntity<Boolean> response = ResponseEntity.notFound().build();
 
@@ -123,4 +123,22 @@ public class UserMovieRelationController {
 
 		return response;
 	}
+
+	@GetMapping("/findRatings/{uuid}")
+	public ResponseEntity<List<UserMovieDto>> findRatings(final @PathVariable("uuid") UUID uuid){
+		ResponseEntity<List<UserMovieDto>> response = ResponseEntity.notFound().build();
+		List<UserMovieDto> userMovieRelationList = null;
+
+		try {
+			userMovieRelationList = userMovieRelationService.findByUserUuidAndRated(uuid);
+			if (userMovieRelationList != null) {
+				response = ResponseEntity.ok(userMovieRelationList);
+			}
+		} catch (Exception e){
+			response = ResponseEntity.badRequest().build();
+		}
+
+		return response;
+	}
+
 }

@@ -57,6 +57,9 @@ public class UserMovieRelationService {
 	public boolean changeRating(UUID uuid, int rating){
 		UserMovieRelation userMovieRelation = userMovieRelationRepository.findByUuid(uuid);
 		userMovieRelation.setRating(rating);
+		if (rating == 0){
+			userMovieRelation.setRated(false);
+		}
 		userMovieRelation = create(userMovieRelation);
 		return userMovieRelation.getClass() != null;
 	}
@@ -128,6 +131,19 @@ public class UserMovieRelationService {
 
 	public List<UserMovieRelation> findByUserUuidAndIsRated(UUID uuid, boolean rated){
 		return userMovieRelationRepository.findByUserUuidAndIsRated(uuid, rated);
+	}
+
+	public List<UserMovieDto> findByUserUuidAndRated(UUID uuid){
+		List<UserMovieDto> userMovieDtos = new ArrayList<>();
+		List<UserMovieRelation> userMovieRelationList = this.userMovieRelationRepository.findByUserUuidAndIsRated(uuid, true);
+		for (UserMovieRelation userMovieRelation : userMovieRelationList) {
+			Optional<Movie> movie = movieService.findByUuid(userMovieRelation.getMovieUuid());
+
+			if (movie.isPresent()){
+				userMovieDtos.add(UserMovieDto.convertToDto(userMovieRelation, movie));
+			}
+		}
+		return userMovieDtos;
 	}
 
 }
