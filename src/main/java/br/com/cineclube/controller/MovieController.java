@@ -41,13 +41,28 @@ public class MovieController {
 		movieService.remove(uuid);
 	}
 
-	@GetMapping("/findAll")
-	public List<Movie> findAll(){
-		return movieService.findAll();
+	@GetMapping("/findAllMovies")
+	public List<Movie> findAllMovies(){
+		return movieService.findAllMovies();
+	}
+
+	@GetMapping("/findTop10")
+	public List<Movie> findTop10(){
+		return movieService.findTop10();
 	}
 
 	@GetMapping("/findByUuid/{uuid}")
 	public Optional<Movie> findByUuid(final @PathVariable("uuid") UUID uuid){
 		return movieService.findByUuid(uuid);
+	}
+
+	@GetMapping("/findAllDocumentary")
+	public List<Movie> findAllDocumentary(){
+		return movieService.findAllDocumentary();
+	}
+
+	@GetMapping("/findAllShort")
+	public List<Movie> findAllShort(){
+		return movieService.findAllShort();
 	}
 }

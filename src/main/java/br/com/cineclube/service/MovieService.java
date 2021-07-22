@@ -31,12 +31,25 @@ public class MovieService {
 		movie.ifPresent(value -> movieRepository.delete(value));
 	}
 
-	public List<Movie> findAll(){
-		return movieRepository.findAll();
+	public List<Movie> findAllMovies(){
+		return movieRepository.findByMovieTypeOrderByTitleAsc("MOVIE");
+	}
+
+	public List<Movie> findTop10(){
+		return movieRepository.findTop10();
 	}
 
 	public Optional<Movie> findByUuid(UUID uuid){
 		return movieRepository.findByUuid(uuid);
 	}
+
+	public List<Movie> findAllDocumentary(){
+		return movieRepository.findByMovieTypeOrderByTitleAsc("DOCUMENTARY");
+	}
+
+	public List<Movie> findAllShort(){
+		return movieRepository.findByMovieTypeOrderByTitleAsc("SHORT");
+	}
+
 
 }
