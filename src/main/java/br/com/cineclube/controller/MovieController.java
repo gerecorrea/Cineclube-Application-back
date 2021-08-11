@@ -2,6 +2,7 @@ package br.com.cineclube.controller;
 
 import br.com.cineclube.entity.Movie;
 import br.com.cineclube.service.MovieService;
+import br.com.cineclube.util.LoggerUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -44,6 +46,30 @@ public class MovieController {
 	@GetMapping("/findAllMovies")
 	public List<Movie> findAllMovies(){
 		return movieService.findAllMovies();
+	}
+
+	@GetMapping("/findAllByFilter")
+	public List<Movie> findAllByFilter(
+			final @RequestParam("title") String title,
+			final @RequestParam("country") String country,
+			final @RequestParam("yearMin") int yearMin,
+			final @RequestParam("yearMax") int yearMax,
+			final @RequestParam("durationMin") int durationMin,
+			final @RequestParam("durationMax") int durationMax,
+			final @RequestParam("numVotesMin") int numVotesMin,
+			final @RequestParam("numVotesMax") int numVotesMax,
+			final @RequestParam("avgRatingMin") float avgRatingMin,
+			final @RequestParam("avgRatingMax") float avgRatingMax
+	){
+		List<Movie> movieList = new ArrayList<>();
+		try {
+			movieList = movieService.findAllByFilter(title, country, yearMin, yearMax,
+					durationMin, durationMax, numVotesMin, numVotesMax, avgRatingMin, avgRatingMax);
+		} catch (Exception e){
+			logger.error(e.getMessage() + LoggerUtils.printStackTrace(e));
+		}
+
+		return movieList;
 	}
 
 	@GetMapping("/findTop10")

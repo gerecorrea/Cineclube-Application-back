@@ -35,6 +35,14 @@ public class MovieService {
 		return movieRepository.findByMovieTypeOrderByTitleAsc("MOVIE");
 	}
 
+	public List<Movie> findAllByFilter(String title, String country, int yearMin, int yearMax,
+	                                   int durationMin, int durationMax, int numVotesMin, int numVotesMax,
+	                                   float avgRatingMin, float avgRatingMax){
+		return movieRepository.findByFilters(
+				"MOVIE", title, country, yearMin, yearMax,
+				durationMin, durationMax, numVotesMin, numVotesMax, avgRatingMin, avgRatingMax);
+	}
+
 	public List<Movie> findTop10(){
 		return movieRepository.findTop10();
 	}
