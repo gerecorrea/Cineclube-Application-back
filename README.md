@@ -13,4 +13,4 @@
 
 # Execução:
 - mvn clean install
-- java -jar ./target/pontocob-app-1.0.1.jar
+- java -jar ./target/cineclube-0.0.1-SNAPSHOT.jar
