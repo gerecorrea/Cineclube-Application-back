@@ -1,6 +1,8 @@
 package br.com.cineclube.service;
 
 import br.com.cineclube.entity.Movie;
+import br.com.cineclube.entity.MoviePersonRelation;
+import br.com.cineclube.entity.Person;
 import br.com.cineclube.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,83 @@ public class MovieService {
 	@Autowired
 	MovieRepository movieRepository;
 
+	@Autowired
+	PersonService personService;
+
+	@Autowired
+	MoviePersonRelationService moviePersonRelationService;
+
 	public Movie create(Movie movie) {
+		for(String i : movie.getDirectors()){
+			UUID uuidToSearch = UUID.fromString(i);
+			Optional<Person> person = personService.findById(uuidToSearch);
+			if (person.isPresent()){
+				MoviePersonRelation moviePersonRelation = new MoviePersonRelation();
+				moviePersonRelation.setMovieUuid(movie.getUuid());
+				moviePersonRelation.setPersonUuid(person.get().getUuid());
+				moviePersonRelation.setMovieName(movie.getTitle());
+				moviePersonRelation.setPersonName(person.get().getName());
+				moviePersonRelation.setJob("DIRECTOR");
+				moviePersonRelationService.create(moviePersonRelation);
+			}
+		}
+
+		for(String i : movie.getActors()){
+			UUID uuidToSearch = UUID.fromString(i);
+			Optional<Person> person = personService.findById(uuidToSearch);
+			if (person.isPresent()){
+				MoviePersonRelation moviePersonRelation = new MoviePersonRelation();
+				moviePersonRelation.setMovieUuid(movie.getUuid());
+				moviePersonRelation.setPersonUuid(person.get().getUuid());
+				moviePersonRelation.setMovieName(movie.getTitle());
+				moviePersonRelation.setPersonName(person.get().getName());
+				moviePersonRelation.setJob("ACTOR");
+				moviePersonRelationService.create(moviePersonRelation);
+			}
+		}
+
+		for(String i : movie.getProducers()){
+			UUID uuidToSearch = UUID.fromString(i);
+			Optional<Person> person = personService.findById(uuidToSearch);
+			if (person.isPresent()){
+				MoviePersonRelation moviePersonRelation = new MoviePersonRelation();
+				moviePersonRelation.setMovieUuid(movie.getUuid());
+				moviePersonRelation.setPersonUuid(person.get().getUuid());
+				moviePersonRelation.setMovieName(movie.getTitle());
+				moviePersonRelation.setPersonName(person.get().getName());
+				moviePersonRelation.setJob("PRODUCER");
+				moviePersonRelationService.create(moviePersonRelation);
+			}
+		}
+
+		for(String i : movie.getWriters()){
+			UUID uuidToSearch = UUID.fromString(i);
+			Optional<Person> person = personService.findById(uuidToSearch);
+			if (person.isPresent()){
+				MoviePersonRelation moviePersonRelation = new MoviePersonRelation();
+				moviePersonRelation.setMovieUuid(movie.getUuid());
+				moviePersonRelation.setPersonUuid(person.get().getUuid());
+				moviePersonRelation.setMovieName(movie.getTitle());
+				moviePersonRelation.setPersonName(person.get().getName());
+				moviePersonRelation.setJob("WRITER");
+				moviePersonRelationService.create(moviePersonRelation);
+			}
+		}
+
+		for(String i : movie.getSelfs()){
+			UUID uuidToSearch = UUID.fromString(i);
+			Optional<Person> person = personService.findById(uuidToSearch);
+			if (person.isPresent()){
+				MoviePersonRelation moviePersonRelation = new MoviePersonRelation();
+				moviePersonRelation.setMovieUuid(movie.getUuid());
+				moviePersonRelation.setPersonUuid(person.get().getUuid());
+				moviePersonRelation.setMovieName(movie.getTitle());
+				moviePersonRelation.setPersonName(person.get().getName());
+				moviePersonRelation.setJob("SELF");
+				moviePersonRelationService.create(moviePersonRelation);
+			}
+		}
+
 		return movieRepository.save( movie );
 	}
 
