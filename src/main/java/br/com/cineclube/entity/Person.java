@@ -35,19 +35,14 @@ public class Person {
 
 	private String country;
 
+	private boolean director;
+	private boolean actor;
+	private boolean producer;
+	private boolean writer;
+	private boolean self;
+
 	@Column(length = 1024)
 	private String imageLink;
-
-	// Tabela intermediária de conexão entre filmes e pessoas - maneira boa para relacionar os filmes de cada pessoa, watchlist, etc?
-//	@ManyToMany
-//	@JoinTable(name="person_movies",
-//			joinColumns=@JoinColumn(name="person_uuid"),
-//			inverseJoinColumns=@JoinColumn(name="movie_uuid"))
-//	private List<Movie> movies = new ArrayList<>();
-
-	private ArrayList<String> jobTypes = new ArrayList<>();
-
-	private String jobRoles;
 
 	@CreationTimestamp
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
