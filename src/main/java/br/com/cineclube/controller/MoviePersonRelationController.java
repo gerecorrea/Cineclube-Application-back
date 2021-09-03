@@ -36,8 +36,10 @@ public class MoviePersonRelationController {
 		return moviePersonRelationService.findByPersonUuid(uuid);
 	}
 
-	@GetMapping("/findByMovieUUidAndJob/{uuid}")
-	public List<MoviePersonRelation> findByMovieUuidAndJob(final @PathVariable("uuid") UUID uuid, final @RequestParam("job") String job){
+	@GetMapping("/findByMovieUuidAndJob")
+	public List<MoviePersonRelation> findByMovieUuidAndJob(
+			final @RequestParam("uuid") UUID uuid,
+			final @RequestParam("job") String job){
 		return moviePersonRelationService.findByMovieUuidAndJob(uuid, job);
 	}
 
