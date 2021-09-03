@@ -69,34 +69,6 @@ public class Movie {
 	@Column(columnDefinition = "numeric default 0")
 	private Integer numFavorites;
 
-	// Tentativa com uma tabela intermediária de conexão - maneira boa para relacionar os filmes de cada pessoa, watchlist, etc?
-	//	@ManyToMany(mappedBy = "Movie")
-	//	private List<Person> persons = new ArrayList<>();
-
-	// Lista de pessoas ligadas ao filme. Acredito que não precise mais, dado o formato acima usado.
-	//@ElementCollection
-	//private List<Person> personsList = new ArrayList<>();
-
-	// Lists of person identified by comma to directors, actors writes and producers
-	// LATER do a third entity linking person to movies, like I did in userMovieRelation, then can have a enum type of relation (director, etc)
-	private String directors;
-	private String directorsNames;
-
-	@Column(length = 2048)
-	private String actors;
-	@Column(length = 1024)
-	private String actorsNames;
-
-	private String writers;
-	private String writersNames;
-
-	private String producers;
-	private String producersNames;
-
-	//	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = true)
-	//	@JoinTable(name = "movie_directors", joinColumns = { @JoinColumn(name = "movie_uuid") }, inverseJoinColumns = { @JoinColumn(name = "person_uuid") })
-	//	private List<Person> directors;
-
 	// Would turn a entity later, with uuid, name, link to click, etc. And probabily a entity intermediating these two.
 	//private List<StreamingType> streamingChannels;
 
@@ -109,4 +81,19 @@ public class Movie {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
 	@Column(name = "lastUpdate")
 	private Timestamp lastUpdate;
+
+	@Transient
+	private ArrayList<String> directors = new ArrayList<>();
+
+	@Transient
+	private ArrayList<String> actors = new ArrayList<>();
+
+	@Transient
+	private ArrayList<String> producers = new ArrayList<>();
+
+	@Transient
+	private ArrayList<String> writers = new ArrayList<>();
+
+	@Transient
+	private ArrayList<String> selfs = new ArrayList<>();
 }
