@@ -31,6 +31,12 @@ public class MoviePersonRelation {
 	private String movieName;
 	private String personName;
 
+	@Column(length = 1024)
+	private String imageLinkMovie;
+
+	@Column(length = 1024)
+	private String imageLinkArtist;
+
 	private String job;
 
 	@CreationTimestamp

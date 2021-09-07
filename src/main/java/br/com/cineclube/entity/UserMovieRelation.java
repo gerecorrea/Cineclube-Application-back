@@ -27,6 +27,9 @@ public class UserMovieRelation {
 	private UUID movieUuid;
 	private UUID userUuid;
 
+	@Column(length = 1024)
+	private String imageLink;
+
 	@Column(columnDefinition = "default false")
 	private boolean isRated;
 
