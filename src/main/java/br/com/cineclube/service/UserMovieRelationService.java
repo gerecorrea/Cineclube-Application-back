@@ -51,6 +51,8 @@ public class UserMovieRelationService {
 				movie.get().setNumVotes(movie.get().getNumVotes() + 1);
 			}
 		}
+		movie.ifPresent(value -> userMovieRelation.setImageLink(value.getImageLink()));
+
 		return userMovieRelationRepository.save(userMovieRelation);
 	}
 
