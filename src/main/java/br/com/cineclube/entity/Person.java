@@ -34,6 +34,11 @@ public class Person {
 	private Timestamp birth;
 
 	private String country;
+	private String city;
+	private String state;
+
+	@Column(length = 1000)
+	private String bio;
 
 	private boolean director;
 	private boolean actor;
