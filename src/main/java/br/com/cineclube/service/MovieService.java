@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,6 +27,18 @@ public class MovieService {
 	MoviePersonRelationService moviePersonRelationService;
 
 	public Movie create(Movie movie) {
+
+		Optional<Movie> movie1 = movieRepository.findByUuid(movie.getUuid());
+
+		// Delete geral dos já cadastrados:
+		if (Objects.nonNull(movie.getUuid())){
+			List<MoviePersonRelation> moviePersonRelationList = moviePersonRelationService.findByMovieUuid(movie.getUuid());
+
+			if (!moviePersonRelationList.isEmpty()){
+				moviePersonRelationService.deleteByMovieUuid(movie.getUuid());
+			}
+		}
+
 		for(String i : movie.getDirectors()){
 			UUID uuidToSearch = UUID.fromString(i);
 			Optional<Person> person = personService.findById(uuidToSearch);
@@ -35,6 +48,8 @@ public class MovieService {
 				moviePersonRelation.setPersonUuid(person.get().getUuid());
 				moviePersonRelation.setMovieName(movie.getTitle());
 				moviePersonRelation.setPersonName(person.get().getName());
+				moviePersonRelation.setImageLinkMovie(movie1.get().getImageLink());
+				moviePersonRelation.setImageLinkArtist(person.get().getImageLink());
 				moviePersonRelation.setJob("DIRECTOR");
 				moviePersonRelationService.create(moviePersonRelation);
 			}
@@ -49,6 +64,8 @@ public class MovieService {
 				moviePersonRelation.setPersonUuid(person.get().getUuid());
 				moviePersonRelation.setMovieName(movie.getTitle());
 				moviePersonRelation.setPersonName(person.get().getName());
+				moviePersonRelation.setImageLinkMovie(movie1.get().getImageLink());
+				moviePersonRelation.setImageLinkArtist(person.get().getImageLink());
 				moviePersonRelation.setJob("ACTOR");
 				moviePersonRelationService.create(moviePersonRelation);
 			}
@@ -63,6 +80,8 @@ public class MovieService {
 				moviePersonRelation.setPersonUuid(person.get().getUuid());
 				moviePersonRelation.setMovieName(movie.getTitle());
 				moviePersonRelation.setPersonName(person.get().getName());
+				moviePersonRelation.setImageLinkMovie(movie1.get().getImageLink());
+				moviePersonRelation.setImageLinkArtist(person.get().getImageLink());
 				moviePersonRelation.setJob("PRODUCER");
 				moviePersonRelationService.create(moviePersonRelation);
 			}
@@ -77,6 +96,8 @@ public class MovieService {
 				moviePersonRelation.setPersonUuid(person.get().getUuid());
 				moviePersonRelation.setMovieName(movie.getTitle());
 				moviePersonRelation.setPersonName(person.get().getName());
+				moviePersonRelation.setImageLinkMovie(movie1.get().getImageLink());
+				moviePersonRelation.setImageLinkArtist(person.get().getImageLink());
 				moviePersonRelation.setJob("WRITER");
 				moviePersonRelationService.create(moviePersonRelation);
 			}
@@ -91,7 +112,10 @@ public class MovieService {
 				moviePersonRelation.setPersonUuid(person.get().getUuid());
 				moviePersonRelation.setMovieName(movie.getTitle());
 				moviePersonRelation.setPersonName(person.get().getName());
+				moviePersonRelation.setImageLinkMovie(movie1.get().getImageLink());
+				moviePersonRelation.setImageLinkArtist(person.get().getImageLink());
 				moviePersonRelation.setJob("SELF");
+				moviePersonRelationService.create(moviePersonRelation);
 				moviePersonRelationService.create(moviePersonRelation);
 			}
 		}
