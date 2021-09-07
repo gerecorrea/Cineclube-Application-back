@@ -45,4 +45,9 @@ public class MoviePersonRelationService {
 		return moviePersonRelationRepository.findByJob(job);
 	}
 
+	public void deleteByMovieUuid(UUID uuid){
+		moviePersonRelationRepository.deleteByMovieUuid(uuid);
+	}
+
+
 }

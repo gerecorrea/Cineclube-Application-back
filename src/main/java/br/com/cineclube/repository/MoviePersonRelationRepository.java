@@ -2,6 +2,7 @@ package br.com.cineclube.repository;
 
 import br.com.cineclube.entity.MoviePersonRelation;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,4 +23,7 @@ public interface MoviePersonRelationRepository extends JpaRepository<MoviePerson
 	List<MoviePersonRelation> findByPersonUuidAndJobContainingIgnoreCase(UUID uuid, String job);
 
 	List<MoviePersonRelation> findByJob(String Job);
+
+	@Query(value = "DELETE FROM moviepersonrelation WHERE movieuuid = :uuid RETURNING *", nativeQuery = true)
+	List<MoviePersonRelation> deleteByMovieUuid(UUID uuid);
 }
