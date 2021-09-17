@@ -49,6 +49,9 @@ public class Person {
 	@Column(length = 1024)
 	private String imageLink;
 
+	@Column(columnDefinition = "numeric default 0")
+	private Integer numFavorites;
+
 	@CreationTimestamp
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
 	@Column(name = "createdDate")
