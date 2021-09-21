@@ -2,16 +2,15 @@ package br.com.cineclube.service;
 
 import br.com.cineclube.dto.UserPersonDto;
 import br.com.cineclube.entity.Person;
+import br.com.cineclube.entity.User;
+import br.com.cineclube.entity.UserMovieRelation;
 import br.com.cineclube.entity.UserPersonRelation;
 import br.com.cineclube.repository.UserPersonRelationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -23,16 +22,42 @@ public class UserPersonRelationService {
 	@Autowired
 	PersonService personService;
 
+	@Autowired
+	UserService userService;
+
+	public UserPersonRelation create(UserPersonRelation userPersonRelation) {
+		Optional<Person> person = personService.findById(userPersonRelation.getPersonUuid());
+		Optional<User> user = userService.findById(userPersonRelation.getUserUuid());
+
+		if (Objects.isNull(userPersonRelation.getUuid())){
+			userPersonRelation.setFavorite(true);
+			if (person.isPresent()){
+				userPersonRelation.setPersonName(person.get().getName());
+				userPersonRelation.setImageLink((person.get().getImageLink()));
+
+				if (userPersonRelation.isFavorite()) person.get().setNumFavorites(person.get().getNumFavorites() + 1);
+			}
+			if (user.isPresent()){
+				userPersonRelation.setUserName((user.get().getName()));
+			}
+		} else {
+			if (person.isPresent()) {
+				if (userPersonRelation.isFavorite()) person.get().setNumFavorites(person.get().getNumFavorites() + 1);
+				else person.get().setNumFavorites(person.get().getNumFavorites() - 1);
+			}
+		}
+		if (person.isPresent())
+			personService.create(person.get());
+
+		userPersonRelation = userPersonRelationRepository.save(userPersonRelation);
+		return userPersonRelation;
+	}
+
 	public boolean changeFavorite(UUID uuid) {
 		UserPersonRelation userPersonRelation = userPersonRelationRepository.findByUuid(uuid);
-		Optional<Person> person = personService.findByUuid(userPersonRelation.getPersonUuid());
 		userPersonRelation.setFavorite(!userPersonRelation.isFavorite());
-		if (person.isPresent()) {
-			if (userPersonRelation.isFavorite()) person.get().setNumFavorites(person.get().getNumFavorites() + 1);
-			else person.get().setNumFavorites(person.get().getNumFavorites() - 1);
-		}
-		userPersonRelation = userPersonRelationRepository.save(userPersonRelation);
-		return userPersonRelation.getClass() != null;
+		userPersonRelationRepository.save(userPersonRelation);
+		return true;
 	}
 
 	public void delete(UserPersonRelation userPersonRelation){
@@ -53,9 +78,10 @@ public class UserPersonRelationService {
 
 	public List<UserPersonDto> findByUserUuidAndFavorite(UUID uuid){
 		List<UserPersonDto> userPersonDtos = new ArrayList<>();
+		//List<UserPersonRelation> userPersonRelationList = this.userPersonRelationRepository.findFavoritesByUserUuid(uuid);
 		List<UserPersonRelation> userPersonRelationList = this.userPersonRelationRepository.findByUserUuidAndFavorite(uuid, true);
 		for (UserPersonRelation userPersonRelation : userPersonRelationList) {
-			Optional<Person> person = personService.findByUuid(userPersonRelation.getPersonUuid());
+			Optional<Person> person = personService.findById(userPersonRelation.getPersonUuid());
 
 			if (person.isPresent()){
 				userPersonDtos.add(UserPersonDto.convertToDto(userPersonRelation, person));

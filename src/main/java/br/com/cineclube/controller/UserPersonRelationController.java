@@ -1,6 +1,7 @@
 package br.com.cineclube.controller;
 
 import br.com.cineclube.dto.UserPersonDto;
+import br.com.cineclube.entity.UserMovieRelation;
 import br.com.cineclube.entity.UserPersonRelation;
 import br.com.cineclube.service.UserPersonRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,12 @@ public class UserPersonRelationController {
 
 	@Autowired
 	UserPersonRelationService userPersonRelationService;
+
+
+	@PostMapping
+	public UserPersonRelation create(@RequestBody UserPersonRelation userPersonRelation){
+		return userPersonRelationService.create(userPersonRelation);
+	}
 
 	@PostMapping("/changeFavorite/{uuid}")
 	public ResponseEntity<Boolean> changeFavorite(final @PathVariable("uuid") UUID uuid){
