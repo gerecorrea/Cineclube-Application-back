@@ -22,7 +22,7 @@ public class UserPersonDto {
 		UserPersonDto userPersonDto = new UserPersonDto();
 
 		if (userPersonRelation.getUuid() != null)
-			userPersonRelation.setUuid(userPersonRelation.getUuid());
+			userPersonDto.setUuid(userPersonRelation.getUuid());
 
 		if(person != null && person.isPresent())
 			userPersonDto.setPerson(person.get());
