@@ -35,10 +35,6 @@ public class PersonService {
 		return personRepository.findAll();
 	}
 
-	public Optional<Person> findByUuid(UUID uuid){
-		return PersonRepository.findByUuid(uuid);
-	}
-
 	public Optional<Person> findById (UUID uuid){
 		return personRepository.findById(uuid);
 	}

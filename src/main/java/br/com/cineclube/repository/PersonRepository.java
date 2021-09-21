@@ -11,9 +11,5 @@ public interface PersonRepository extends JpaRepository<Person, UUID> {
 
 	List<Person> findAll();
 
-	static Optional<Person> findByUuid(UUID uuid) {
-		return Optional.empty();
-	}
-
 	Optional<Person> findById(UUID uuid);
 }

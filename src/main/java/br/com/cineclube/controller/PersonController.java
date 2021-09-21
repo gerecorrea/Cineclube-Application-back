@@ -39,7 +39,7 @@ public class PersonController {
 
 	@GetMapping("/findByUuid/{uuid}")
 	public Optional<Person> findByUuid(final @PathVariable("uuid") UUID uuid){
-		return personService.findByUuid(uuid);
+		return personService.findById(uuid);
 	}
 
 	@GetMapping("/findById/{uuid}")
