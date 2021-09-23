@@ -42,6 +42,8 @@ public class UserMovieRelation {
 	@Column(columnDefinition = "default false")
 	private boolean watchlist;
 
+	private String movieType;
+
 	@CreationTimestamp
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
 	@Column(name = "createdDate")

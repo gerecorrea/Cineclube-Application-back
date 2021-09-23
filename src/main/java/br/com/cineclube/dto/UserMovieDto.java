@@ -24,6 +24,8 @@ public class UserMovieDto {
 
 	private boolean favorite;
 
+	private String movieType;
+
 	public static UserMovieDto convertToDto(UserMovieRelation userMovieRelation, Optional<Movie> movie) {
 		UserMovieDto userMovieDto = new UserMovieDto();
 
@@ -43,6 +45,9 @@ public class UserMovieDto {
 
 		if (userMovieRelation.isFavorite())
 			userMovieDto.setFavorite(true);
+
+		if (userMovieRelation.getMovieType() != null)
+			userMovieDto.setMovieType(userMovieRelation.getMovieType());
 
 		return userMovieDto;
 	}
