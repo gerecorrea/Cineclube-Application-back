@@ -31,6 +31,9 @@ public class PersonService {
 		person.ifPresent(value -> personRepository.delete(value));
 	}
 
+	public List<Person> findTopArtists(){
+		return personRepository.findTopArtists();
+	}
 	public List<Person> findAll(){
 		return personRepository.findAll();
 	}
