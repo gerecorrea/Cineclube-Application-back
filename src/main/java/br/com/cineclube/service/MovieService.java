@@ -149,6 +149,15 @@ public class MovieService {
 		return movieRepository.findTop10();
 	}
 
+	public List<Movie> findTopFavoriteAll(){
+		return movieRepository.findTopFavoriteAll();
+	}
+
+	public List<Movie> findTopRatingAll(){
+		return movieRepository.findTopRatingAll();
+	}
+
+
 	public Optional<Movie> findByUuid(UUID uuid){
 		return movieRepository.findByUuid(uuid);
 	}

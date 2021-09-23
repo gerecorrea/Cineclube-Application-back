@@ -29,6 +29,12 @@ public interface MovieRepository extends JpaRepository<Movie, UUID> {
 	@Query(value = "SELECT * FROM movie m WHERE numvotes > 0 AND movietype = 'MOVIE' ORDER BY avgrating DESC LIMIT 10", nativeQuery = true)
 	List<Movie> findTop10();
 
+	@Query(value = "SELECT * FROM movie WHERE numfavorites > 0 ORDER BY numfavorites DESC LIMIT 10", nativeQuery = true)
+	List<Movie> findTopFavoriteAll();
+
+	@Query(value = "SELECT * FROM movie WHERE numvotes> 0 ORDER BY avgrating DESC LIMIT 10", nativeQuery = true)
+	List<Movie> findTopRatingAll();
+
 	Optional<Movie> findByUuid(UUID uuid);
 
 }

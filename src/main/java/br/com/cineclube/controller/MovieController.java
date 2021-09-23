@@ -1,6 +1,7 @@
 package br.com.cineclube.controller;
 
 import br.com.cineclube.entity.Movie;
+import br.com.cineclube.entity.Person;
 import br.com.cineclube.service.MovieService;
 import br.com.cineclube.util.LoggerUtils;
 import org.apache.logging.log4j.LogManager;
@@ -21,7 +22,7 @@ import java.util.UUID;
 @RequestMapping("/movie")
 public class MovieController {
 
-	private static final String endPointCollection = "/movieController";
+	private static final String endPointCollection = "/movie";
 
 	private final Logger logger = LogManager.getLogger(this.getClass());
 
@@ -75,6 +76,44 @@ public class MovieController {
 	@GetMapping("/findTop10")
 	public List<Movie> findTop10(){
 		return movieService.findTop10();
+	}
+
+	@GetMapping("/findTopFavoriteAll")
+	public List<Movie> findTopFavoriteAll(){
+		long startTime = System.currentTimeMillis();
+		logger.info(LoggerUtils.notificationEndpointRequested("GET", endPointCollection,
+				"/findTopFavoriteAll"));
+
+		List<Movie> movieList = new ArrayList<>();
+		try {
+			movieList = movieService.findTopFavoriteAll();
+
+		} catch (Exception e) {
+			logger.error(e.getMessage() + LoggerUtils.printStackTrace(e));
+		}
+
+		logger.debug(LoggerUtils.calculateExecutionTime(startTime));
+
+		return movieList;
+	}
+
+	@GetMapping("/findTopRatingAll")
+	public List<Movie> findTopRatingAll(){
+		long startTime = System.currentTimeMillis();
+		logger.info(LoggerUtils.notificationEndpointRequested("GET", endPointCollection,
+				"/findTopRatingAll"));
+
+		List<Movie> movieList = new ArrayList<>();
+		try {
+			movieList = movieService.findTopRatingAll();
+
+		} catch (Exception e) {
+			logger.error(e.getMessage() + LoggerUtils.printStackTrace(e));
+		}
+
+		logger.debug(LoggerUtils.calculateExecutionTime(startTime));
+
+		return movieList;
 	}
 
 	@GetMapping("/findByUuid/{uuid}")
