@@ -22,6 +22,8 @@ public interface UserMovieRelationRepository  extends JpaRepository<UserMovieRel
 
 	List<UserMovieRelation> findByUserUuidAndFavorite(UUID uuid, boolean favorite);
 
+	List<UserMovieRelation> findByUserUuidAndFavoriteAndMovieType(UUID uuid, boolean favorite, String movieType);
+
 	List<UserMovieRelation> findByUserUuidAndWatchlist(UUID uuid, boolean watchlist);
 
 	List<UserMovieRelation> findByUserUuidAndRating(UUID uuid, int rating);

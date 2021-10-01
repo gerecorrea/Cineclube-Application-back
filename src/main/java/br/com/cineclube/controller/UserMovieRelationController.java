@@ -107,6 +107,23 @@ public class UserMovieRelationController {
 		return response;
 	}
 
+	@GetMapping("/findFavoritesByMovieType/{movieType}/{uuid}")
+	public ResponseEntity<List<UserMovieDto>> findFavorites(final @PathVariable("movieType") String movieType, final @PathVariable("uuid") UUID uuid){
+		ResponseEntity<List<UserMovieDto>> response = ResponseEntity.notFound().build();
+		List<UserMovieDto> userMovieRelationList = null;
+
+		try {
+			userMovieRelationList = userMovieRelationService.findByUserUuidAndFavoriteByMovieType(uuid, movieType);
+			if (userMovieRelationList != null) {
+				response = ResponseEntity.ok(userMovieRelationList);
+			}
+		} catch (Exception e){
+			response = ResponseEntity.badRequest().build();
+		}
+
+		return response;
+	}
+
 	@GetMapping("/findWatchlist/{uuid}")
 	public ResponseEntity<List<UserMovieDto>> findWatchlist(final @PathVariable("uuid") UUID uuid){
 		ResponseEntity<List<UserMovieDto>> response = ResponseEntity.notFound().build();

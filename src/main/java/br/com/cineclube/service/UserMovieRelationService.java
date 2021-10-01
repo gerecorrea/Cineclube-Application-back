@@ -114,6 +114,19 @@ public class UserMovieRelationService {
 		return userMovieDtos;
 	}
 
+	public List<UserMovieDto> findByUserUuidAndFavoriteByMovieType(UUID uuid, String movieType){
+		List<UserMovieDto> userMovieDtos = new ArrayList<>();
+		List<UserMovieRelation> userMovieRelationList = this.userMovieRelationRepository.findByUserUuidAndFavoriteAndMovieType(uuid, true, movieType);
+		for (UserMovieRelation userMovieRelation : userMovieRelationList) {
+			Optional<Movie> movie = movieService.findByUuid(userMovieRelation.getMovieUuid());
+
+			if (movie.isPresent()){
+				userMovieDtos.add(UserMovieDto.convertToDto(userMovieRelation, movie));
+			}
+		}
+		return userMovieDtos;
+	}
+
 	public List<UserMovieDto> findByUserUuidAndWatchlist(UUID uuid){
 		List<UserMovieDto> userMovieDtos = new ArrayList<>();
 		List<UserMovieRelation> userMovieRelationList = this.userMovieRelationRepository.findByUserUuidAndWatchlist(uuid, true);
