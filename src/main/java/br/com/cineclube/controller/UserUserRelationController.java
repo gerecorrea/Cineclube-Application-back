@@ -26,9 +26,9 @@ public class UserUserRelationController extends LoggedInController {
 		return userUserRelationService.create(userUserRelation);
 	}
 
-	@DeleteMapping("/{uuid}")
-	public void remove(final @PathVariable("uuid") UUID uuid) {
-		userUserRelationService.deleteByUuid(uuid);
+	@DeleteMapping("/{follower}/{followed}")
+	public void remove(final @PathVariable("follower") UUID follower, final @PathVariable("followed") UUID followed) {
+		userUserRelationService.deleteByUuid(follower, followed);
 	}
 
 	@DeleteMapping("/removeByRelation")

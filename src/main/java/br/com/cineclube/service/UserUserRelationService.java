@@ -4,6 +4,7 @@ import br.com.cineclube.entity.UserUserRelation;
 import br.com.cineclube.repository.UserUserRelationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,11 +25,12 @@ public class UserUserRelationService {
 		return userUserRelationRepository.save(userUserRelation);
 	}
 
-	public void deleteByUuid(UUID uuid){
-		Optional<UserUserRelation> userUserRelation = userUserRelationRepository.findById(uuid);
+	@Modifying
+	public void deleteByUuid(UUID follower, UUID followed){
+		List<UserUserRelation> userUserRelation = userUserRelationRepository.findByFollowerUuidAndFollowedUuid(follower, followed);
 
-		if (userUserRelation.isPresent()){
-			userUserRelationRepository.delete(userUserRelation.get());
+		if (userUserRelation.size() > 0){
+			userUserRelationRepository.deleteAll(userUserRelation);
 		}
 	}
 
