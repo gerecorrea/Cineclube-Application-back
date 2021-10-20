@@ -16,6 +16,8 @@ local.properties
 .recommenders
 .classpath
 .project
+.circleci/
+.mvn/
 
 # External tool builders
 .externalToolBuilders/
