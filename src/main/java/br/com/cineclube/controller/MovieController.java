@@ -1,7 +1,6 @@
 package br.com.cineclube.controller;
 
 import br.com.cineclube.entity.Movie;
-import br.com.cineclube.entity.Person;
 import br.com.cineclube.service.MovieService;
 import br.com.cineclube.util.LoggerUtils;
 import org.apache.logging.log4j.LogManager;
@@ -31,22 +30,73 @@ public class MovieController {
 
 	@PostMapping
 	public Movie create(@RequestBody Movie movie){
-		return movieService.create(movie);
+
+		Movie response = new Movie();
+		long startTime = System.currentTimeMillis();
+		logger.info(LoggerUtils.notificationEndpointRequested("POST", endPointCollection));
+
+		try {
+			response = movieService.create(movie);
+		} catch (Exception e) {
+			logger.error(e.getMessage() + LoggerUtils.printStackTrace(e));
+		}
+
+		logger.debug(LoggerUtils.calculateExecutionTime(startTime));
+
+		return response;
 	}
 
 	@PutMapping("/{uuid}")
 	public Movie update(final @PathVariable("uuid") UUID uuid, @RequestBody Movie movie) {
-		return  movieService.update(uuid, movie);
+
+		Movie response = new Movie();
+		long startTime = System.currentTimeMillis();
+		logger.info(LoggerUtils.notificationEndpointRequested("PUT", endPointCollection, 
+				"/{uuid}"));
+
+		try {
+			response = movieService.update(uuid, movie);
+		} catch (Exception e) {
+			logger.error(e.getMessage() + LoggerUtils.printStackTrace(e));
+		}
+
+		logger.debug(LoggerUtils.calculateExecutionTime(startTime));
+
+		return response;
 	}
 
 	@DeleteMapping("/{uuid}")
 	public void remove(final @PathVariable("uuid") UUID uuid) {
-		movieService.remove(uuid);
+
+		long startTime = System.currentTimeMillis();
+		logger.info(LoggerUtils.notificationEndpointRequested("DELETE", endPointCollection, 
+				"/{uuid}"));
+
+		try {
+			movieService.remove(uuid);
+		} catch (Exception e) {
+			logger.error(e.getMessage() + LoggerUtils.printStackTrace(e));
+		}
+
+		logger.debug(LoggerUtils.calculateExecutionTime(startTime));
 	}
 
 	@GetMapping("/findAllMovies")
-	public List<Movie> findAllMovies(){
-		return movieService.findAllMovies();
+	public List<Movie> findAllMovies() {
+		List<Movie> response = new ArrayList<>();
+		long startTime = System.currentTimeMillis();
+		logger.info(LoggerUtils.notificationEndpointRequested("GET", endPointCollection, 
+				"/findAllMovies"));
+
+		try {
+			return movieService.findAllMovies();
+		} catch (Exception e) {
+			logger.error(e.getMessage() + LoggerUtils.printStackTrace(e));
+		}
+
+		logger.debug(LoggerUtils.calculateExecutionTime(startTime));
+
+		return response;
 	}
 
 	@GetMapping("/findAllByFilter")
@@ -62,7 +112,12 @@ public class MovieController {
 			final @RequestParam("avgRatingMin") float avgRatingMin,
 			final @RequestParam("avgRatingMax") float avgRatingMax
 	){
+
 		List<Movie> movieList = new ArrayList<>();
+		long startTime = System.currentTimeMillis();
+		logger.info(LoggerUtils.notificationEndpointRequested("GET", endPointCollection, 
+				"/findAllByFilter"));
+
 		try {
 			movieList = movieService.findAllByFilter(title, country, yearMin, yearMax,
 					durationMin, durationMax, numVotesMin, numVotesMax, avgRatingMin, avgRatingMax);
@@ -70,16 +125,33 @@ public class MovieController {
 			logger.error(e.getMessage() + LoggerUtils.printStackTrace(e));
 		}
 
+		logger.debug(LoggerUtils.calculateExecutionTime(startTime));
+
 		return movieList;
 	}
 
 	@GetMapping("/findTop10")
 	public List<Movie> findTop10(){
-		return movieService.findTop10();
+
+		List<Movie> movieList = new ArrayList<>();
+		long startTime = System.currentTimeMillis();
+		logger.info(LoggerUtils.notificationEndpointRequested("GET", endPointCollection, 
+				"/findTop10"));
+
+		try {
+			movieList = movieService.findTop10();
+		} catch (Exception e){
+				logger.error(e.getMessage() + LoggerUtils.printStackTrace(e));
+			}
+
+			logger.debug(LoggerUtils.calculateExecutionTime(startTime));
+
+			return movieList;
 	}
 
 	@GetMapping("/findTopFavoriteAll")
 	public List<Movie> findTopFavoriteAll(){
+
 		long startTime = System.currentTimeMillis();
 		logger.info(LoggerUtils.notificationEndpointRequested("GET", endPointCollection,
 				"/findTopFavoriteAll"));
@@ -118,16 +190,58 @@ public class MovieController {
 
 	@GetMapping("/findByUuid/{uuid}")
 	public Optional<Movie> findByUuid(final @PathVariable("uuid") UUID uuid){
-		return movieService.findByUuid(uuid);
+
+		Optional<Movie> optionalMovie = Optional.empty();
+		long startTime = System.currentTimeMillis();
+		logger.info(LoggerUtils.notificationEndpointRequested("GET", endPointCollection, 
+				"/findByUuid/{uuid}"));
+
+		try {
+			optionalMovie = movieService.findByUuid(uuid);
+		} catch (Exception e){
+			logger.error(e.getMessage() + LoggerUtils.printStackTrace(e));
+		}
+
+		logger.debug(LoggerUtils.calculateExecutionTime(startTime));
+
+		return optionalMovie;
 	}
 
 	@GetMapping("/findAllDocumentary")
 	public List<Movie> findAllDocumentary(){
-		return movieService.findAllDocumentary();
+
+		List<Movie> movieList = new ArrayList<>();
+		long startTime = System.currentTimeMillis();
+		logger.info(LoggerUtils.notificationEndpointRequested("GET", endPointCollection, 
+				"/findAllDocumentary"));
+
+		try {
+			movieList = movieService.findAllDocumentary();
+		} catch (Exception e){
+			logger.error(e.getMessage() + LoggerUtils.printStackTrace(e));
+		}
+
+		logger.debug(LoggerUtils.calculateExecutionTime(startTime));
+
+		return movieList;
 	}
 
 	@GetMapping("/findAllShort")
 	public List<Movie> findAllShort(){
-		return movieService.findAllShort();
+
+		List<Movie> movieList = new ArrayList<>();
+		long startTime = System.currentTimeMillis();
+		logger.info(LoggerUtils.notificationEndpointRequested("GET", endPointCollection, 
+				"/findAllShort"));
+
+		try {
+			movieList = movieService.findAllShort();
+		} catch (Exception e){
+			logger.error(e.getMessage() + LoggerUtils.printStackTrace(e));
+		}
+
+		logger.debug(LoggerUtils.calculateExecutionTime(startTime));
+
+		return movieList;
 	}
 }

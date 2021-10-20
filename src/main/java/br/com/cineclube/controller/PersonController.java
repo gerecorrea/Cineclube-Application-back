@@ -26,41 +26,120 @@ public class PersonController {
 
 	@PostMapping
 	public Person create(@RequestBody Person person){
-		return personService.create(person);
+
+		Person response = new Person();
+		long startTime = System.currentTimeMillis();
+		logger.info(LoggerUtils.notificationEndpointRequested("GET", endPointCollection));
+
+		try {
+			response = personService.create(person);
+		} catch (Exception e) {
+			logger.error(e.getMessage() + LoggerUtils.printStackTrace(e));
+		}
+
+		logger.debug(LoggerUtils.calculateExecutionTime(startTime));
+
+		return response;
 	}
 
 	@PutMapping("/{uuid}")
 	public Person update(final @PathVariable("uuid") UUID uuid, @RequestBody Person person) {
-		return personService.update(uuid, person);
+
+		Person response = new Person();
+		long startTime = System.currentTimeMillis();
+		logger.info(LoggerUtils.notificationEndpointRequested("GET", endPointCollection, "/{uuid}"));
+
+		try {
+			response = personService.update(uuid, person);
+		} catch (Exception e) {
+			logger.error(e.getMessage() + LoggerUtils.printStackTrace(e));
+		}
+
+		logger.debug(LoggerUtils.calculateExecutionTime(startTime));
+
+		return response;
 	}
 
 	@DeleteMapping("/{uuid}")
 	public void remove(final @PathVariable("uuid") UUID uuid) {
-		personService.remove(uuid);
+
+		long startTime = System.currentTimeMillis();
+		logger.info(LoggerUtils.notificationEndpointRequested("GET", endPointCollection, "/{uuid}"));
+
+		try {
+			personService.remove(uuid);
+		} catch (Exception e) {
+			logger.error(e.getMessage() + LoggerUtils.printStackTrace(e));
+		}
+
+		logger.debug(LoggerUtils.calculateExecutionTime(startTime));
 	}
 
 	@GetMapping("/findAll")
 	public List<Person> findAll(){
-		return personService.findAll();
-	}
 
-	@GetMapping("/findByUuid/{uuid}")
-	public Optional<Person> findByUuid(final @PathVariable("uuid") UUID uuid){
-		return personService.findById(uuid);
-	}
-
-	@GetMapping("/findById/{uuid}")
-	public Optional<Person> findById(final @PathVariable("uuid") UUID uuid){
-		return personService.findById(uuid);
-	}
-
-	@GetMapping("/findTopArtists")
-	public List<Person> findTopArtists() {
+		List<Person> personList = new ArrayList<>();
 		long startTime = System.currentTimeMillis();
 		logger.info(LoggerUtils.notificationEndpointRequested("GET", endPointCollection,
 				"/findTopArtists"));
 
+		try {
+		personList = personService.findAll();
+		} catch (Exception e) {
+			logger.error(e.getMessage() + LoggerUtils.printStackTrace(e));
+		}
+
+		logger.debug(LoggerUtils.calculateExecutionTime(startTime));
+
+		return personList;
+	}
+
+	@GetMapping("/findByUuid/{uuid}")
+	public Optional<Person> findByUuid(final @PathVariable("uuid") UUID uuid){
+
+		Optional<Person> optionalPerson = Optional.empty();
+		long startTime = System.currentTimeMillis();
+		logger.info(LoggerUtils.notificationEndpointRequested("GET", endPointCollection,
+				"/findTopArtists"));
+
+		try {
+			return personService.findById(uuid);
+		} catch (Exception e) {
+			logger.error(e.getMessage() + LoggerUtils.printStackTrace(e));
+		}
+
+		logger.debug(LoggerUtils.calculateExecutionTime(startTime));
+
+		return optionalPerson;
+	}
+
+	@GetMapping("/findById/{uuid}")
+	public Optional<Person> findById(final @PathVariable("uuid") UUID uuid){
+
+		Optional<Person> optionalPerson = Optional.empty();
+		long startTime = System.currentTimeMillis();
+		logger.info(LoggerUtils.notificationEndpointRequested("GET", endPointCollection,
+				"/findTopArtists"));
+
+		try {
+			optionalPerson = personService.findById(uuid);
+		} catch (Exception e) {
+			logger.error(e.getMessage() + LoggerUtils.printStackTrace(e));
+		}
+
+		logger.debug(LoggerUtils.calculateExecutionTime(startTime));
+
+		return optionalPerson;
+	}
+
+	@GetMapping("/findTopArtists")
+	public List<Person> findTopArtists() {
+
 		List<Person> personList = new ArrayList<>();
+		long startTime = System.currentTimeMillis();
+		logger.info(LoggerUtils.notificationEndpointRequested("GET", endPointCollection,
+				"/findTopArtists"));
+
 		try {
 			personList = personService.findTopArtists();
 
