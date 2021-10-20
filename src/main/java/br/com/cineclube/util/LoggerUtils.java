@@ -57,6 +57,9 @@ public abstract class LoggerUtils {
 	public static String printStackTrace(Exception e) {
 
 		StringBuilder sb = new StringBuilder();
+		sb.append("\n");
+		sb.append("\t");
+		sb.append(e.getMessage());
 		for (StackTraceElement s : e.getStackTrace()) {
 			sb.append("\n");
 			sb.append("\t");
