@@ -20,14 +20,14 @@ public interface UserMovieRelationRepository  extends JpaRepository<UserMovieRel
 
 	Optional<UserMovieRelation> findByUserUuid(UUID uuid);
 
-	List<UserMovieRelation> findByUserUuidAndFavorite(UUID uuid, boolean favorite);
+	List<UserMovieRelation> findByUserUuidAndFavoriteOrderByCreatedDateDesc(UUID uuid, boolean favorite);
 
-	List<UserMovieRelation> findByUserUuidAndFavoriteAndMovieType(UUID uuid, boolean favorite, String movieType);
+	List<UserMovieRelation> findByUserUuidAndFavoriteAndMovieTypeOrderByCreatedDateDesc(UUID uuid, boolean favorite, String movieType);
 
-	List<UserMovieRelation> findByUserUuidAndWatchlist(UUID uuid, boolean watchlist);
+	List<UserMovieRelation> findByUserUuidAndWatchlistOrderByCreatedDateDesc(UUID uuid, boolean watchlist);
 
-	List<UserMovieRelation> findByUserUuidAndRating(UUID uuid, int rating);
+	List<UserMovieRelation> findByUserUuidAndRatingOrderByCreatedDateDesc(UUID uuid, int rating);
 
-	List<UserMovieRelation> findByUserUuidAndIsRatedOrderByLastUpdateDesc(UUID uuid, boolean rated);
+	List<UserMovieRelation> findByUserUuidAndIsRatedOrderByCreatedDateDesc(UUID uuid, boolean rated);
 
 }

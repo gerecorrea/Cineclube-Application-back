@@ -103,7 +103,7 @@ public class UserMovieRelationService {
 
 	public List<UserMovieDto> findByUserUuidAndFavorite(UUID uuid){
 		List<UserMovieDto> userMovieDtos = new ArrayList<>();
-		List<UserMovieRelation> userMovieRelationList = this.userMovieRelationRepository.findByUserUuidAndFavorite(uuid, true);
+		List<UserMovieRelation> userMovieRelationList = this.userMovieRelationRepository.findByUserUuidAndFavoriteOrderByCreatedDateDesc(uuid, true);
 		for (UserMovieRelation userMovieRelation : userMovieRelationList) {
 			Optional<Movie> movie = movieService.findByUuid(userMovieRelation.getMovieUuid());
 
@@ -116,7 +116,7 @@ public class UserMovieRelationService {
 
 	public List<UserMovieDto> findByUserUuidAndFavoriteByMovieType(UUID uuid, String movieType){
 		List<UserMovieDto> userMovieDtos = new ArrayList<>();
-		List<UserMovieRelation> userMovieRelationList = this.userMovieRelationRepository.findByUserUuidAndFavoriteAndMovieType(uuid, true, movieType);
+		List<UserMovieRelation> userMovieRelationList = this.userMovieRelationRepository.findByUserUuidAndFavoriteAndMovieTypeOrderByCreatedDateDesc(uuid, true, movieType);
 		for (UserMovieRelation userMovieRelation : userMovieRelationList) {
 			Optional<Movie> movie = movieService.findByUuid(userMovieRelation.getMovieUuid());
 
@@ -129,7 +129,7 @@ public class UserMovieRelationService {
 
 	public List<UserMovieDto> findByUserUuidAndWatchlist(UUID uuid){
 		List<UserMovieDto> userMovieDtos = new ArrayList<>();
-		List<UserMovieRelation> userMovieRelationList = this.userMovieRelationRepository.findByUserUuidAndWatchlist(uuid, true);
+		List<UserMovieRelation> userMovieRelationList = this.userMovieRelationRepository.findByUserUuidAndWatchlistOrderByCreatedDateDesc(uuid, true);
 		for (UserMovieRelation userMovieRelation : userMovieRelationList){
 			Optional<Movie> movie = movieService.findByUuid(userMovieRelation.getMovieUuid());
 
@@ -141,16 +141,16 @@ public class UserMovieRelationService {
 	}
 
 	public List<UserMovieRelation> findByUserUuidAndRating(UUID uuid, int rating){
-		return userMovieRelationRepository.findByUserUuidAndRating(uuid, rating);
+		return userMovieRelationRepository.findByUserUuidAndRatingOrderByCreatedDateDesc(uuid, rating);
 	}
 
 	public List<UserMovieRelation> findByUserUuidAndIsRated(UUID uuid, boolean rated){
-		return userMovieRelationRepository.findByUserUuidAndIsRatedOrderByLastUpdateDesc(uuid, rated);
+		return userMovieRelationRepository.findByUserUuidAndIsRatedOrderByCreatedDateDesc(uuid, rated);
 	}
 
 	public List<UserMovieDto> findByUserUuidAndRated(UUID uuid){
 		List<UserMovieDto> userMovieDtos = new ArrayList<>();
-		List<UserMovieRelation> userMovieRelationList = this.userMovieRelationRepository.findByUserUuidAndIsRatedOrderByLastUpdateDesc(uuid, true);
+		List<UserMovieRelation> userMovieRelationList = this.userMovieRelationRepository.findByUserUuidAndIsRatedOrderByCreatedDateDesc(uuid, true);
 		for (UserMovieRelation userMovieRelation : userMovieRelationList) {
 			Optional<Movie> movie = movieService.findByUuid(userMovieRelation.getMovieUuid());
 
