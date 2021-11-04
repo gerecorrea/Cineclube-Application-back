@@ -26,6 +26,8 @@ public interface UserMovieRelationRepository  extends JpaRepository<UserMovieRel
 
 	List<UserMovieRelation> findByUserUuidAndWatchlistOrderByCreatedDateDesc(UUID uuid, boolean watchlist);
 
+	List<UserMovieRelation> findFirst25ByUserUuidAndWatchlistOrderByCreatedDateDesc(UUID uuid, boolean watchlist);
+
 	List<UserMovieRelation> findByUserUuidAndRatingOrderByCreatedDateDesc(UUID uuid, int rating);
 
 	List<UserMovieRelation> findByUserUuidAndIsRatedOrderByCreatedDateDesc(UUID uuid, boolean rated);

@@ -255,4 +255,26 @@ public class UserMovieRelationController {
 		return response;
 	}
 
+	@GetMapping("/findFirst25Watchlist/{uuid}")
+	public ResponseEntity<List<UserMovieDto>> findWatchlistFirst25(final @PathVariable("uuid") UUID uuid){
+
+		ResponseEntity<List<UserMovieDto>> response = ResponseEntity.notFound().build();
+		List<UserMovieDto> userMovieRelationList = null;
+		long startTime = System.currentTimeMillis();
+		logger.info(LoggerUtils.notificationEndpointRequested("GET", endPointCollection, "/findWatchlist/{uuid}"));
+
+		try {
+			userMovieRelationList = userMovieRelationService.findFirst25ByUserUuidAndWatchlist(uuid);
+			if (userMovieRelationList != null) {
+				response = ResponseEntity.ok(userMovieRelationList);
+			}
+		} catch (Exception e){
+			response = ResponseEntity.badRequest().build();
+		}
+
+		logger.debug(LoggerUtils.calculateExecutionTime(startTime));
+
+		return response;
+	}
+
 }
