@@ -37,4 +37,7 @@ public interface MovieRepository extends JpaRepository<Movie, UUID> {
 
 	Optional<Movie> findByUuid(UUID uuid);
 
+	@Query(value = "SELECT * FROM movie ORDER BY datereleased DESC LIMIT 25", nativeQuery = true)
+	List<Movie> findFirst25MoviesByDateReleasedDesc();
+
 }

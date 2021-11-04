@@ -170,5 +170,6 @@ public class MovieService {
 		return movieRepository.findByMovieTypeOrderByTitleAsc("SHORT");
 	}
 
+	public List<Movie> findFirst25MoviesByDateReleasedDesc() {return movieRepository.findFirst25MoviesByDateReleasedDesc(); }
 
 }

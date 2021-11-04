@@ -244,4 +244,23 @@ public class MovieController {
 
 		return movieList;
 	}
+
+	@GetMapping("/findFirst25MoviesByDateReleasedDesc")
+	public List<Movie> findAllByDateReleased(){
+
+		List<Movie> movieList = new ArrayList<>();
+		long startTime = System.currentTimeMillis();
+		logger.info(LoggerUtils.notificationEndpointRequested("GET", endPointCollection,
+				"/findAllByDateReleased"));
+
+		try {
+			movieList = movieService.findFirst25MoviesByDateReleasedDesc();
+		} catch (Exception e){
+			logger.error(e.getMessage() + LoggerUtils.printStackTrace(e));
+		}
+
+		logger.debug(LoggerUtils.calculateExecutionTime(startTime));
+
+		return movieList;
+	}
 }
