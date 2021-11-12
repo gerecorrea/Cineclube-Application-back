@@ -130,8 +130,8 @@ public class MovieController {
 		return movieList;
 	}
 
-	@GetMapping("/findTop10")
-	public List<Movie> findTop10(){
+	@GetMapping("/findTopByLimit")
+	public List<Movie> findTopByLimitNumber(final @RequestParam("limit") int limit){
 
 		List<Movie> movieList = new ArrayList<>();
 		long startTime = System.currentTimeMillis();
@@ -139,7 +139,7 @@ public class MovieController {
 				"/findTop10"));
 
 		try {
-			movieList = movieService.findTop10();
+			movieList = movieService.findTopByLimitNumber(limit);
 		} catch (Exception e){
 				logger.error(e.getMessage() + LoggerUtils.printStackTrace(e));
 			}

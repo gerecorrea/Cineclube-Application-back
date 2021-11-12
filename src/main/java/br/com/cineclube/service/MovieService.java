@@ -145,8 +145,8 @@ public class MovieService {
 				durationMin, durationMax, numVotesMin, numVotesMax, avgRatingMin, avgRatingMax);
 	}
 
-	public List<Movie> findTop10(){
-		return movieRepository.findTop10();
+	public List<Movie> findTopByLimitNumber(int limit){
+		return movieRepository.findTopByLimitNumber(limit);
 	}
 
 	public List<Movie> findTopFavoriteAll(){

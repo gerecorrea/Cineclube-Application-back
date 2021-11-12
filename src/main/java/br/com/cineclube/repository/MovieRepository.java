@@ -25,9 +25,8 @@ public interface MovieRepository extends JpaRepository<Movie, UUID> {
 	                          int yearMin, int yearMax, int durationMin, int durationMax,
 	                          int numVotesMin, int numVotesMax, float avgRatingMin, float avgRatingMax);
 
-	// Top 10 (variável) com mínimo numVotes variável conforme contexto:
-	@Query(value = "SELECT * FROM movie m WHERE numvotes > 0 AND movietype = 'MOVIE' ORDER BY avgrating DESC LIMIT 10", nativeQuery = true)
-	List<Movie> findTop10();
+	@Query(value = "SELECT * FROM movie m WHERE numvotes > 0 AND movietype = 'MOVIE' ORDER BY avgrating DESC LIMIT :limit", nativeQuery = true)
+	List<Movie> findTopByLimitNumber(int limit);
 
 	@Query(value = "SELECT * FROM movie WHERE numfavorites > 0 ORDER BY numfavorites DESC LIMIT 10", nativeQuery = true)
 	List<Movie> findTopFavoriteAll();
