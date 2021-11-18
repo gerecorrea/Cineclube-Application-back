@@ -132,8 +132,8 @@ public class PersonController {
 		return optionalPerson;
 	}
 
-	@GetMapping("/findTopArtists")
-	public List<Person> findTopArtists() {
+	@GetMapping("/findTopArtistsByLimit")
+	public List<Person> findTopArtists(final @RequestParam("limit") int limit) {
 
 		List<Person> personList = new ArrayList<>();
 		long startTime = System.currentTimeMillis();
@@ -141,7 +141,7 @@ public class PersonController {
 				"/findTopArtists"));
 
 		try {
-			personList = personService.findTopArtists();
+			personList = personService.findTopArtists(limit);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage() + LoggerUtils.printStackTrace(e));

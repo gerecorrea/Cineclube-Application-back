@@ -14,6 +14,6 @@ public interface PersonRepository extends JpaRepository<Person, UUID> {
 
 	Optional<Person> findById(UUID uuid);
 
-	@Query(value = "SELECT * FROM person WHERE numfavorites > 0 ORDER BY numfavorites DESC LIMIT 10", nativeQuery = true)
-	List<Person> findTopArtists();
+	@Query(value = "SELECT * FROM person WHERE numfavorites > 0 ORDER BY numfavorites DESC LIMIT :limit", nativeQuery = true)
+	List<Person> findTopArtists(int limit);
 }
